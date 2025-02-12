@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 3001; // Cambia el puerto si es necesario
+const PORT = process.env.PORT || 3001; // Usa el puerto de Railway si está disponible
 
 app.use(cors()); // Permite el acceso desde el frontend
 app.use(bodyParser.json()); // Habilita JSON en las peticiones
@@ -25,6 +25,11 @@ db.connect(err => {
   console.log('🟢 Conectado a MySQL');
 });
 
+// 📌 Ruta principal para comprobar que el backend funciona
+app.get('/', (req, res) => {
+  res.json({ message: "Backend funcionando correctamente 🚀" });
+});
+
 // 📌 Endpoint para obtener los celulares
 app.get('/api/celulares', (req, res) => {
   const sql = 'SELECT * FROM celulares';
@@ -40,5 +45,5 @@ app.get('/api/celulares', (req, res) => {
 
 // 📌 Iniciar el servidor
 app.listen(PORT, () => {
-  console.log(`🟢 Servidor backend corriendo en http://localhost:${PORT}`);
+  console.log(`🟢 Servidor backend corriendo en el puerto ${PORT}`);
 });
