@@ -2,27 +2,29 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
 const app = express();
-const PORT = process.env.PORT || 3001; // Usa el puerto de Railway si está disponible
+const PORT = process.env.PORT || 3001;
 
-app.use(cors()); // Permite el acceso desde el frontend
-app.use(bodyParser.json()); // Habilita JSON en las peticiones
+app.use(cors());
+app.use(bodyParser.json());
 
-// 📌 Configuración de la conexión a MySQL
 const db = mysql.createConnection({
-  host: 'localhost',  // Cambia si el servidor MySQL está en otro lado
+  host: 'roundhouse.proxy.rlwy.net', // 🔹 Host de Railway (Pública)
   user: 'root',
-  password: 'Mateo1523+-',
-  database: 'comparador_celulares'
+  password: 'qimstoalvWGIiPWrCpbbuzyOyvObdPMb', // 🔹 Clave de Railway
+  database: 'railway',
+  port: 23462 // 🔹 Puerto correcto
 });
 
-// 📌 Conectar a la base de datos
+
+// 📌 Conectar a la base de datos con manejo de errores
 db.connect(err => {
   if (err) {
     console.error('🔴 Error al conectar a MySQL:', err);
     return;
   }
-  console.log('🟢 Conectado a MySQL');
+  console.log('🟢 Conectado a MySQL en Railway');
 });
 
 // 📌 Ruta principal para comprobar que el backend funciona
